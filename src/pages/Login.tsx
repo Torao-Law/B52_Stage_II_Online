@@ -38,10 +38,10 @@ export default function Login(props: handleAuth) {
         </label>
         <input 
           type='text' 
-          name="status" 
-          id='status' 
+          name="password" 
+          id='password' 
           className='border border-black rounded w-full p-1'
-          placeholder='type your status'
+          placeholder='type your password'
           onChange={props.handle}
         />
       </div>

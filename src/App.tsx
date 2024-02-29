@@ -14,7 +14,7 @@ const App: React.FC = () => {
     password: ""
   })
 
-  function handleSetForm(event: ChangeEvent<HTMLInputElement>) : void {
+  function handleSetForm(event: ChangeEvent<HTMLInputElement>) : void {    
     setForm({
       ...form,
       [event.target.name]: event.target.value
@@ -23,13 +23,17 @@ const App: React.FC = () => {
 
   function login(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    
     if(form.username === "admin" && form.password === "administrator") {
       setIsLoginAdmin(true)
+      localStorage.setItem("isLogin", "administrator")
     } else if(form.username !== "" && form.password !== "" && form.username !== "admin" && form.password !== "administrator" ) {
+      navigate("/home")
       setIsLogin(true)
+      localStorage.setItem("userLogin", "users")
     }
   }
-
+  
   React.useEffect(() => {
     navigate("/home")
   }, [isLogin])
@@ -37,6 +41,22 @@ const App: React.FC = () => {
   React.useEffect(() => {
     navigate("/admin")
   }, [isLoginAdmin])
+
+  React.useEffect(() => {
+    const isLoginUser = localStorage.getItem("userLogin")  
+    if(isLoginUser == "users") {    
+      setIsLogin(!isLogin)
+    } 
+  }, [])
+
+  React.useEffect(() => {
+    const isLogin = localStorage.getItem("isLogin")
+
+    if(isLogin == "administrator") {
+      setIsLoginAdmin(!isLoginAdmin)
+    } 
+  }, [])
+
 
   function PrivateRoute() {
     if(isLogin) {
@@ -54,19 +74,22 @@ const App: React.FC = () => {
     }
   }
 
+  console.log("user, ", isLogin);
+  console.log("admin, ", isLoginAdmin);
+  
 
   return (
     <>
       <Routes>
         <Route path="/login" element={<Login handle={handleSetForm} login={login}/>} />
         
+        <Route path="/home" element={<PrivateRoute />} >
+          <Route path="/home" element={<Home />} />
+        </Route>
         <Route path="/" element={<PrivateRouteAdmin />} >
           <Route path="/admin" element={<HomeAdmin />} />
         </Route>
 
-        <Route path="/" element={<PrivateRoute />} >
-          <Route path="/home" element={<Home />} />
-        </Route>
       </Routes>
     </>
   )

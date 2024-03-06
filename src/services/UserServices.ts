@@ -3,8 +3,14 @@
 import { AppDataSource } from "../data-source"
 import { User } from "../entity/User"
 
+interface IUser {
+  id: number;
+  username: string;
+  password: string;
+}
+
 export default new class UserService {
-  async create(reqBody: any) : Promise<any> {
+  async create(reqBody: any) : Promise<IUser> {
     try {
       const repository = AppDataSource.getRepository(User)
 

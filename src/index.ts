@@ -9,12 +9,48 @@ AppDataSource.initialize().then(async () => {
     app.use(express.json())
     app.use('/api/v1', Route)
 
-    app.get('/hello', (req: Request, res: Response) => {
-        res.status(200).json({ data: "Success get data" })
-    })
-
+    
     app.listen(port, () => console.log(`Server succes on PORT ${port}`))
 }).catch(error => console.log(error))
 
-
 // => DB => SERVICE => CONTROLLERS => ROUTES => INDEX
+
+
+
+
+// app.get('/hello', (req: Request, res: Response) => {
+//     const { name, email } = req.body
+//     const data = { 
+//         message: "Success get data" 
+//     }
+    
+//     const query = await sequelize.query("INSERT INTO") // => service 
+
+//     res.render('index', query)
+// })
+
+// app.get('/product', (req: Request, res: Response) => {
+//     const { product, price } = req.body
+//     const data = { 
+//         message: "Success get data" 
+//     }
+    
+//     const query = await sequelize.query("INSERT INTO") // => service 
+
+//     res.render('index', query)
+// })
+
+// res.status(200).json(data)
+// app.get('/hello', hello)
+
+// function hello(req, res) {
+
+// }
+
+// () => {
+
+// }
+
+// function () {
+
+// }
